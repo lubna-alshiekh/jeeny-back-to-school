@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeeny Back to School Campaign Analysis</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root{
+  --pink:#EC008C;
+  --purple:#662D91;
+  --dark:#45196F;
+  --light:#FCDFEB;
+  --grey:#939598;
+  --black:#3E3E3F;
+  --white:#FFFFFF;
+  --cyan:#009EB4;
+  --lime:#BFD730;
+  --red:#C63C5B;
+  --green:#2FA66D;
+  --shadow:0 16px 44px rgba(69,25,111,.14);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Poppins,Arial,sans-serif;
+  color:var(--black);
+  background:
+    radial-gradient(circle at top right, rgba(236,0,140,.09), transparent 26%),
+    linear-gradient(135deg,#f8f5fa 0%,#fff 52%,#fdf0f7 100%);
+}
+.topbar{
+  position:sticky;top:0;z-index:20;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid #eee;
+  padding:16px 5vw;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;
+}
+.brand{
+  font-size:25px;font-weight:700;color:var(--purple);
+}
+.brand span{color:var(--pink)}
+.top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{
+  border:0;border-radius:12px;padding:11px 15px;
+  font-weight:600;cursor:pointer;font-family:inherit;
+}
+.btn-primary{background:var(--purple);color:white}
+.btn-secondary{background:var(--light);color:var(--purple)}
+.btn-danger{background:#fff0f4;color:var(--red)}
+.container{width:min(1450px,92vw);margin:28px auto 60px}
+.hero{
+  border-radius:28px;
+  padding:34px;
+  background:linear-gradient(135deg,var(--purple),var(--dark));
+  color:#fff;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.hero:after{
+  content:"";position:absolute;width:240px;height:240px;border-radius:50%;
+  border:32px solid rgba(255,255,255,.07);right:-95px;top:-100px;
+}
+.hero h1{font-size:38px;line-height:1.12;margin:6px 0 12px}
+.hero p{margin:0;color:#f4eafb;max-width:920px;line-height:1.6}
+.eyebrow{text-transform:uppercase;letter-spacing:1.5px;font-size:12px;font-weight:700;color:#ffd5ed}
+.summary-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:22px;
+}
+.summary-card{
+  background:#fff;border-radius:18px;padding:18px;box-shadow:var(--shadow);
+}
+.summary-card span{font-size:11px;color:#777;display:block}
+.summary-card strong{font-size:23px;color:var(--purple);display:block;margin-top:5px}
+.summary-card small{font-size:10px;color:#8c8590}
+.section{
+  background:#fff;border-radius:24px;padding:24px;margin-top:22px;box-shadow:var(--shadow)
+}
+.section-head{
+  display:flex;justify-content:space-between;align-items:start;gap:18px;margin-bottom:18px
+}
+.section-head h2{margin:0;color:var(--dark);font-size:23px}
+.section-head p{margin:5px 0 0;color:#777;font-size:13px;line-height:1.5}
+.badge{
+  background:var(--light);color:var(--purple);
+  padding:8px 12px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap
+}
+.inputs-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px
+}
+.field label{display:block;font-size:11px;font-weight:600;color:#666;margin-bottom:6px}
+.field input,.field select{
+  width:100%;padding:11px 12px;border-radius:12px;border:1px solid #ddd;
+  font-family:inherit;font-size:13px;outline:none;background:#fff
+}
+.field input:focus,.field select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(102,45,145,.08)}
+.field small{font-size:9px;color:#999}
+.analysis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.insight{
+  border-radius:18px;padding:18px;background:#faf8fb;border-left:5px solid var(--purple)
+}
+.insight h3{font-size:15px;margin:0 0 8px;color:var(--purple)}
+.insight p{font-size:12px;line-height:1.55;color:#6e6872;margin:0}
+.cohorts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.cohort{
+  border:1px solid #e9dff0;border-radius:18px;padding:18px;background:#fff
+}
+.cohort h3{margin:0 0 12px;color:var(--purple);font-size:16px}
+.cohort .big{font-size:28px;font-weight:700;color:var(--pink)}
+.cohort p{font-size:11px;color:#777;line-height:1.5}
+table{width:100%;border-collapse:collapse}
+th,td{padding:11px 10px;border-bottom:1px solid #eee;text-align:left;font-size:12px;vertical-align:middle}
+th{background:#f5eff8;color:var(--purple);font-size:11px}
+td input,td select{
+  width:100%;padding:8px;border-radius:9px;border:1px solid #ddd;font-family:inherit;font-size:12px
+}
+.money{text-align:right;font-variant-numeric:tabular-nums}
+.total-row td{font-weight:700;color:var(--dark);background:#fbf6fd}
+.table-wrap{overflow:auto}
+.inline-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.prob-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+.prob-card{
+  background:#faf8fb;border-radius:18px;padding:18px
+}
+.prob-card h3{margin:0 0 12px;color:var(--purple)}
+.prob-bar{height:14px;background:#eee;border-radius:999px;overflow:hidden;margin:8px 0}
+.prob-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink))}
+.warning{
+  margin-top:12px;padding:12px;border-radius:12px;font-size:11px;
+  background:#fff7df;border-left:4px solid #e6ae2f;color:#665019
+}
+.good{
+  margin-top:12px;padding:12px;border-radius:12px;font-size:11px;
+  background:#eaf8f1;border-left:4px solid var(--green);color:#245b43
+}
+.budget-layout{display:grid;grid-template-columns:1.6fr .8fr;gap:18px}
+.budget-card{
+  border-radius:20px;padding:20px;background:linear-gradient(145deg,#fff,#faf6fc);
+  border:1px solid #eadff0
+}
+.budget-card h3{margin:0 0 12px;color:var(--purple)}
+.budget-line{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #eee;font-size:12px}
+.budget-line:last-child{border:0}
+.budget-line strong{color:var(--dark)}
+.status-box{
+  border-radius:20px;padding:22px;text-align:center;color:#fff;background:var(--green)
+}
+.status-box.over{background:var(--red)}
+.status-box .amount{font-size:34px;font-weight:700;margin:8px 0}
+.status-box small{opacity:.88}
+.note{font-size:11px;color:#777;line-height:1.55;margin-top:12px}
+.footer-note{font-size:10px;color:#8a858f;text-align:center;margin-top:22px}
+
+.tooltip{cursor:help}
+.floating-tooltip{
+  position:fixed;
+  z-index:100001;
+  width:min(330px,calc(100vw - 24px));
+  background:#2f2435;
+  color:#fff;
+  padding:12px 14px;
+  border-radius:12px;
+  font-size:11px;
+  line-height:1.55;
+  box-shadow:0 18px 46px rgba(0,0,0,.34);
+  pointer-events:none;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(6px);
+  transition:opacity .12s ease,transform .12s ease,visibility .12s ease;
+  text-align:left;
+}
+.floating-tooltip.show{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+.dual-money{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  align-items:flex-end;
+}
+.dual-money .usd{
+  font-size:9px;
+  color:#8b8390;
+  font-weight:500;
+}
+.summary-card .usd-summary{
+  font-size:10px;
+  color:#8b8390;
+  margin-top:2px;
+}
+.calc-note{
+  display:block;
+  font-size:9px;
+  color:#999;
+  margin-top:4px;
+}
+
+
+.click-help{
+  cursor:pointer;
+}
+.click-help:hover{
+  outline:2px solid rgba(102,45,145,.22);
+  outline-offset:3px;
+  background-color:rgba(252,223,235,.18);
+}
+.click-help{
+  transition:outline-color .12s ease,background-color .12s ease,transform .12s ease;
+  cursor:pointer;
+}
+.summary-card.click-help:hover{
+  transform:translateY(-2px);
+}
+.summary-card.click-help:focus{
+  outline:3px solid rgba(236,0,140,.28);
+  outline-offset:3px;
+}
+.explanation-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(35,24,39,.48);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:100000;
+}
+.explanation-overlay.show{
+  display:flex !important;
+}
+.explanation-panel{
+  width:min(560px,100%);
+  max-height:85vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:22px;
+  box-shadow:0 30px 90px rgba(0,0,0,.28);
+  padding:24px;
+  position:relative;
+}
+.explanation-panel h3{
+  margin:0 42px 10px 0;
+  color:var(--dark);
+  font-size:21px;
+}
+.explanation-panel p{
+  margin:0;
+  color:#625b66;
+  font-size:13px;
+  line-height:1.7;
+}
+.explanation-panel .formula-box{
+  margin-top:16px;
+  padding:14px 16px;
+  border-radius:14px;
+  background:#f7f1fa;
+  color:var(--purple);
+  font-size:12px;
+  line-height:1.6;
+  font-weight:600;
+}
+.explanation-panel .example-box{
+  margin-top:12px;
+  padding:14px 16px;
+  border-radius:14px;
+  background:var(--light);
+  color:var(--dark);
+  font-size:12px;
+  line-height:1.6;
+}
+.close-explanation{
+  position:absolute;
+  top:16px;
+  right:16px;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:#f1e9f5;
+  color:var(--purple);
+  font-size:20px;
+  cursor:pointer;
+}
+.explanation-hint{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:#f6eff9;
+  color:var(--purple);
+  font-size:11px;
+  font-weight:600;
+  margin-top:12px;
+}
+.explanation-hint:before{
+  content:"i";
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--purple);
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+}
+
+@media(max-width:1100px){
+  .summary-grid{grid-template-columns:repeat(3,1fr)}
+  .inputs-grid{grid-template-columns:repeat(2,1fr)}
+  .analysis-grid,.cohorts{grid-template-columns:1fr}
+  .prob-grid,.budget-layout{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  .summary-grid,.inputs-grid{grid-template-columns:1fr}
+  .hero h1{font-size:29px}
+  .topbar{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">jeeny<span>.</span> Campaign Planner</div>
+  <div class="top-actions">
+    <button class="btn btn-secondary" onclick="resetDefaults()">Reset defaults</button>
+    <button class="btn btn-primary" onclick="window.print()">Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="container">
+  <section class="hero">
+    <div class="eyebrow">KSA Drivers Campaign · 14 Days</div>
+    <h1>Jeeny Back to School Book</h1>
+    <p>A dynamic campaign-analysis dashboard for estimating participation, sticker-pack volume, daily and weekly winners, final prizes, office-event costs, contingency, and total budget exposure.</p>
+    <div class="explanation-hint">Point at any highlighted item for a quick explanation. Click it for the full formula and example.</div>
+  </section>
+
+  <div class="summary-grid">
+    <div class="summary-card tooltip click-help" data-title="Eligible drivers" data-formula="Manual input: total campaign audience" data-example="Example: entering 70,000 means the campaign is available to 70,000 drivers." data-tip="The total number of drivers included in campaign targeting. Click to edit the eligible-driver input."><span>Eligible drivers</span><strong id="sumEligible">70,000</strong><small>Editable below</small></div>
+    <div class="summary-card tooltip click-help" data-title="Expected target achievers" data-formula="Eligible drivers × target achievement rate" data-example="70,000 × 11.5% = 8,050 expected target achievers." data-tip="Eligible drivers × target achievement rate. Click to edit the achievement rate."><span>Expected target achievers</span><strong id="sumAchievers">8,050</strong><small>Eligible × achievement rate</small></div>
+    <div class="summary-card tooltip click-help" data-title="Estimated packs opened" data-formula="Expected target achievers × average qualified days" data-example="8,050 achievers × 5 qualified days = 40,250 packs." data-tip="Expected target achievers × average qualified days. Click to edit average qualified days."><span>Estimated packs opened</span><strong id="sumPacks">40,250</strong><small>Achievers × qualified days</small></div>
+    <div class="summary-card tooltip click-help" data-title="Expected full albums" data-formula="Expected target achievers × estimated full-album completion rate" data-example="8,050 × 50% = 4,025 expected completed albums." data-tip="Expected target achievers × album completion rate. Click to edit the completion rate."><span>Expected full albums</span><strong id="sumAlbums">4,025</strong><small>Achievers × album rate</small></div>
+    <div class="summary-card tooltip click-help" data-title="Total campaign cost" data-formula="Daily cash + weekly cash + grand prizes + office event + contingency" data-example="The total automatically changes whenever any prize quantity, price, event cost, or assumption changes." data-tip="Daily draws + weekly draws + grand prizes + office event + contingency."><span>Total campaign cost</span><strong id="sumCost">SAR 0</strong><div class="usd-summary" id="sumCostUsd">USD 0</div><small>Includes contingency</small></div>
+    <div class="summary-card tooltip click-help" data-title="Budget remaining" data-formula="Approved budget ceiling in SAR − total campaign cost" data-example="USD 30,000 × 3.75 = SAR 112,500. If campaign cost is SAR 80,000, remaining budget is SAR 32,500." data-tip="Approved budget ceiling converted to SAR minus the total campaign cost. A negative value means the plan is over budget."><span>Budget remaining</span><strong id="sumRemaining">SAR 0</strong><div class="usd-summary" id="sumRemainingUsd">USD 0</div><small>Against approved ceiling</small></div>
+  </div>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2>1. Campaign assumptions</h2>
+        <p>Change the inputs below and the full campaign estimate updates automatically.</p>
+      </div>
+      <div class="badge">Live calculation</div>
+    </div>
+    <div class="inputs-grid">
+      <div class="field"><label class="tooltip click-help" data-title="Campaign duration" data-formula="Manual input" data-example="A 14-day duration means 14 daily draw opportunities." data-tip="Number of calendar days the campaign will run. This controls the number of daily draws.">Campaign duration (days)</label><input id="duration" type="number" min="1" value="14"></div>
+      <div class="field"><label class="tooltip click-help" data-title="Eligible drivers" data-formula="Manual input" data-example="Enter the number of drivers you intend to include." data-tip="Total drivers included in the campaign audience.">Eligible drivers</label><input id="eligible" type="number" min="0" value="70000"></div>
+      <div class="field"><label class="tooltip click-help" data-title="Target achievement rate" data-formula="Expected achievers ÷ eligible drivers × 100" data-example="11.5% is based on the previous legal-driver campaign benchmark." data-tip="Expected percentage of eligible drivers who will reach the campaign target at least once.">Target achievement rate (%)</label><input id="achievementRate" type="number" min="0" max="100" step="0.1" value="11.5"><small>Historical legal-base benchmark</small></div>
+      <div class="field"><label class="tooltip click-help" data-title="Average qualified days" data-formula="Total qualified driver-days ÷ target achievers" data-example="If achievers hit their target on 5 days on average, each one opens about 5 packs." data-tip="Average number of days each successful driver is expected to hit their daily target.">Average qualified days per achiever</label><input id="avgDays" type="number" min="0" step="0.1" value="5"></div>
+
+      <div class="field"><label class="tooltip click-help" data-title="Cards per pack" data-formula="Manual input" data-example="At 3 cards per pack, 40,250 packs generate 120,750 card drops." data-tip="Number of collectible cards revealed each time a driver reaches the daily target.">Cards per pack</label><input id="cardsPerPack" type="number" min="1" value="3"></div>
+      <div class="field"><label class="tooltip click-help" data-title="Album completion rate" data-formula="Completed albums ÷ target achievers × 100" data-example="A 50% assumption means half of expected achievers qualify for the final premium draw." data-tip="Estimated share of target achievers who will collect all required unique cards.">Expected full-album completion (%)</label><input id="albumRate" type="number" min="0" max="100" step="0.1" value="50"></div>
+      <div class="field"><label class="tooltip click-help" data-title="Budget ceiling" data-formula="Manual input" data-example="USD 30,000 is converted to SAR using the exchange-rate input." data-tip="Maximum approved campaign budget in US dollars.">USD budget ceiling</label><input id="usdBudget" type="number" min="0" value="30000"></div>
+      <div class="field"><label class="tooltip click-help" data-title="Exchange rate" data-formula="SAR value ÷ USD value" data-example="At 3.75, USD 30,000 equals SAR 112,500." data-tip="Exchange rate used to convert all SAR costs into USD.">SAR per USD</label><input id="fx" type="number" min="0" step="0.01" value="3.75"></div>
+
+      <div class="field"><label class="tooltip click-help" data-title="Contingency" data-formula="Subtotal × contingency percentage" data-example="A 10% contingency on SAR 80,000 adds SAR 8,000." data-tip="Additional budget buffer added on top of subtotal costs.">Contingency (%)</label><input id="contingency" type="number" min="0" step="0.5" value="10"></div>
+      <div class="field"><label>Include office event?</label><select id="includeEvent"><option value="1">Yes</option><option value="0">No</option></select></div>
+      <div class="field"><label class="tooltip click-help" data-title="Daily winners" data-formula="Manual input" data-example="20 winners per day across 14 days creates 280 daily winners." data-tip="Fixed number of cash winners selected from each day’s target achievers.">Daily draw winners per day</label><input id="dailyWinners" type="number" min="0" value="20"></div>
+      <div class="field"><label class="tooltip click-help" data-title="Daily prize value" data-formula="Manual input" data-example="20 winners × SAR 50 × 14 days = SAR 14,000." data-tip="Cash amount paid to each daily winner.">Daily cash prize per winner (SAR)</label><input id="dailyPrize" type="number" min="0" value="50"></div>
+
+      <div class="field"><label class="tooltip click-help" data-title="Weekly draws" data-formula="Manual input" data-example="For a two-week campaign, two weekly draws are recommended." data-tip="Number of weekly prize draws during the campaign.">Weekly draws</label><input id="weeklyDraws" type="number" min="0" value="2"></div>
+      <div class="field"><label class="tooltip click-help" data-title="Weekly winners" data-formula="Manual input" data-example="10 winners in each of two draws creates 20 weekly winners." data-tip="Number of winners selected in each weekly draw.">Weekly winners per draw</label><input id="weeklyWinners" type="number" min="0" value="10"></div>
+      <div class="field"><label class="tooltip click-help" data-title="Weekly prize value" data-formula="Manual input" data-example="10 winners × 2 draws × SAR 250 = SAR 5,000." data-tip="Cash amount awarded to each weekly winner.">Weekly prize per winner (SAR)</label><input id="weeklyPrize" type="number" min="0" value="250"></div>
+      <div class="field"><label class="tooltip click-help" data-title="Incremental rides" data-formula="Campaign rides − expected baseline rides" data-example="This optional input activates cost per incremental ride." data-tip="Optional estimate of rides generated above the expected baseline. Used to calculate cost per incremental ride.">Estimated incremental rides</label><input id="incrementalRides" type="number" min="0" value="0"><small>Optional; used for cost per incremental ride</small></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2>2. Historical analysis translated into campaign structure</h2>
+        <p>The campaign design follows the strongest patterns seen in previous Jeeny driver campaigns.</p>
+      </div>
+    </div>
+    <div class="analysis-grid">
+      <div class="insight">
+        <h3>Retained drivers are the volume anchor</h3>
+        <p>Retained drivers generated the majority of converted rides and showed the strongest resilience at higher milestones. They keep the 6-rides-per-day target and receive access to the full premium journey.</p>
+      </div>
+      <div class="insight">
+        <h3>New drivers need an early win</h3>
+        <p>Newly boarded drivers respond well but drop when the first meaningful milestone is too far away. Their 5-rides-per-day target earns an immediate sticker pack and daily-draw entry.</p>
+      </div>
+      <div class="insight">
+        <h3>Reactivated drivers need low-friction motivation</h3>
+        <p>Reactivated drivers showed the sharpest early drop-off. Their 3-rides-per-day target creates a quick win and gives them the same chance to collect cards and enter daily draws.</p>
+      </div>
+    </div>
+
+    <div class="cohorts" style="margin-top:18px">
+      <div class="cohort"><h3>Retained Drivers</h3><div class="big">6 rides/day</div><p>High-volume cohort. Main source of incremental ride volume and premium-album completion.</p></div>
+      <div class="cohort"><h3>Newly Onboarded</h3><div class="big">5 rides/day</div><p>Responsive cohort. The immediate pack helps strengthen early activation and habit formation.</p></div>
+      <div class="cohort"><h3>Reactivated</h3><div class="big">3 rides/day</div><p>Lower-friction target designed to reduce early drop-off and support repeat activity.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2>3. Sticker and qualification logic</h2>
+        <p>The sticker mechanic stays mostly non-monetary, while cash exposure is controlled through fixed draws.</p>
+      </div>
+      <div class="badge">9-card album</div>
+    </div>
+
+    <div class="prob-grid">
+      <div class="table-wrap">
+        <table id="probabilityTable">
+          <thead>
+            <tr>
+              <th class="tooltip click-help" data-title="Card probability" data-formula="Expected card drops ÷ total card drops" data-example="A 15% Notebook probability means about 15 of every 100 card drops are expected to be Notebook cards." data-tip="The chance that any single card drop produces this card. All card probabilities together equal 100%.">Card</th>
+              <th>Rarity</th>
+              <th class="tooltip click-help" data-title="Probability per drop" data-formula="Chance attached to one random card reveal" data-example="A driver opening five packs with three cards each receives 15 independent card-drop opportunities." data-tip="Probability per individual card drop, not per driver. A driver receives several drops across the campaign.">Probability per drop</th>
+              <th class="tooltip click-help" data-title="Expected card drops" data-formula="Estimated packs × cards per pack × card probability" data-example="40,250 packs × 3 cards × 15% = about 18,113 Notebook drops." data-tip="Estimated total number of this card distributed = total card drops × card probability.">Expected card drops</th>
+              <th class="tooltip click-help" data-title="Drivers receiving the card" data-formula="Achievers × [1 − (1 − card probability)^(average drops per achiever)]" data-example="This accounts for each driver having several chances to receive the same card, while allowing duplicates." data-tip="Approximate number of target achievers expected to receive this card at least once. Formula: achievers × [1 − (1 − probability)^(average drops per achiever)].">Approx. drivers receiving it</th>
+              <th>Campaign role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="click-help" data-title="Notebook probability" data-formula="15% per card drop" data-example="High probability supports quick early progress." data-tip="High probability supports quick early progress." data-prob="0.15"><td>📚 Notebook</td><td>Common</td><td>15%</td><td class="expected-drops">—</td><td class="expected-drivers">—</td><td>Early progress</td></tr>
+            <tr class="click-help" data-title="Pencil probability" data-formula="15% per card drop" data-example="High probability supports quick early progress." data-tip="High probability supports quick early progress." data-prob="0.15"><td>✏️ Pencil</td><td>Common</td><td>15%</td><td class="expected-drops">—</td><td class="expected-drivers">—</td><td>Early progress</td></tr>
+            <tr class="click-help" data-title="Backpack probability" data-formula="14% per card drop" data-example="Common enough to maintain momentum without making every pack identical." data-tip="Common enough to maintain momentum without making every pack identical." data-prob="0.14"><td>🎒 Backpack</td><td>Common</td><td>14%</td><td class="expected-drops">—</td><td class="expected-drivers">—</td><td>Early progress</td></tr>
+            <tr class="click-help" data-title="School Bus probability" data-formula="14% per card drop" data-example="Common enough to maintain momentum without making every pack identical." data-tip="Common enough to maintain momentum without making every pack identical." data-prob="0.14"><td>🚌 School Bus</td><td>Common</td><td>14%</td><td class="expected-drops">—</td><td class="expected-drivers">—</td><td>Early progress</td></tr>
+            <tr class="click-help" data-title="Classroom probability" data-formula="11% per card drop" data-example="Uncommon status slows album completion and supports mid-campaign engagement." data-tip="Uncommon status slows album completion and supports mid-campaign engagement." data-prob="0.11"><td>🏫 Classroom</td><td>Uncommon</td><td>11%</td><td class="expected-drops">—</td><td class="expected-drivers">—</td><td>Mid-campaign chase</td></tr>
+            <tr class="click-help" data-title="Teacher probability" data-formula="11% per card drop" data-example="Uncommon status slows album completion and supports mid-campaign engagement." data-tip="Uncommon status slows album completion and supports mid-campaign engagement." data-prob="0.11"><td>👩‍🏫 Teacher</td><td>Uncommon</td><td>11%</td><td class="expected-drops">—</td><td class="expected-drivers">—</td><td>Mid-campaign chase</td></tr>
+            <tr class="click-help" data-title="Principal probability" data-formula="7% per card drop" data-example="Rare status preserves premium progression." data-tip="Rare status preserves premium progression." data-prob="0.07"><td>🧑‍💼 Principal</td><td>Rare</td><td>7%</td><td class="expected-drops">—</td><td class="expected-drivers">—</td><td>Premium progression</td></tr>
+            <tr class="click-help" data-title="Gold Star probability" data-formula="7% per card drop" data-example="Rare card can support an extra premium-draw entry." data-tip="Rare card can support an extra premium-draw entry." data-prob="0.07"><td>⭐ Gold Star</td><td>Rare</td><td>7%</td><td class="expected-drops">—</td><td class="expected-drivers">—</td><td>Extra premium-draw entry</td></tr>
+            <tr class="click-help" data-title="Principal's Trophy probability" data-formula="6% per card drop" data-example="Legendary status keeps the final collection aspirational while remaining achievable over multiple packs." data-tip="Legendary status keeps the final collection aspirational while remaining achievable over multiple packs." data-prob="0.06"><td>👑 Principal's Trophy</td><td>Legendary</td><td>6%</td><td class="expected-drops">—</td><td class="expected-drivers">—</td><td>Additional premium-draw entry</td></tr>
+          </tbody>
+        </table>
+        <div class="note tooltip click-help" data-tip="These are expected-value estimates, not guaranteed counts. Actual distribution will vary because each card drop is random and duplicate cards are allowed.">
+          How the estimates work: total card drops = expected packs × cards per pack. Expected card drops = total card drops × card probability. Approximate drivers receiving a card at least once uses the probability of getting that card across all average drops earned by one achiever.
+        </div>
+      </div>
+
+      <div class="prob-card">
+        <h3>How the probabilities were selected</h3>
+        <p style="font-size:12px;color:#666;line-height:1.6">
+          Common cards carry the highest probability so drivers see fast progress. Uncommon cards slow completion slightly, while Rare and Legendary cards preserve anticipation and keep the full album valuable. The total equals 100% across all nine cards.
+        </p>
+        <p style="font-size:12px;color:#666;line-height:1.6">
+          The model is designed so a driver earning several packs has a strong chance of collecting most cards, but still needs consistency—and occasionally missing-card protection—to complete the album.
+        </p>
+        <h3 style="margin-top:18px">Recommended qualification</h3>
+        <p style="font-size:12px;color:#666;line-height:1.6"><b>Daily:</b> Reach the cohort ride target to unlock one three-card pack and one daily-draw entry.</p>
+        <p style="font-size:12px;color:#666;line-height:1.6"><b>Weekly:</b> Collect at least seven unique cards to enter the weekly cash draw.</p>
+        <p style="font-size:12px;color:#666;line-height:1.6"><b>Final:</b> Complete all nine unique cards to enter the premium draw.</p>
+        <p style="font-size:12px;color:#666;line-height:1.6"><b>Protection:</b> After pack seven, increase the chance of missing cards to reduce excessive duplicates.</p>
+        <div class="prob-bar"><div class="prob-fill" style="width:82%"></div></div>
+        <small style="color:#777">Illustrative maximum full-album probability after 14 packs: ~82%</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2>4. Daily and weekly cash rewards</h2>
+        <p>These values are controlled by the campaign assumptions above. Fixed winner counts keep the cost predictable.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Reward layer</th><th>Calculation</th><th>Winner count</th><th>Total cost (SAR)</th><th>Approx. chance</th></tr></thead>
+        <tbody>
+          <tr class="tooltip click-help" data-tip="Daily winner count is fixed, so total cash exposure remains predictable even when participation changes.">
+            <td>Daily cash draw</td>
+            <td id="dailyCalc">—</td>
+            <td id="dailyCount">—</td>
+            <td class="money" id="dailyCost">—</td>
+            <td id="dailyChance">—</td>
+          </tr>
+          <tr class="tooltip click-help" data-tip="Weekly draws reward consistency. The estimated chance uses the expected full-album pool as a conservative denominator.">
+            <td>Weekly cash draw</td>
+            <td id="weeklyCalc">—</td>
+            <td id="weeklyCount">—</td>
+            <td class="money" id="weeklyCost">—</td>
+            <td id="weeklyChance">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">The daily probability is estimated using expected daily qualifiers. Actual odds will vary based on the number of qualifying drivers on each day.</div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2>5. Editable grand-prize calculator</h2>
+        <p>Add, remove, or amend prize quantities and unit prices. Totals update instantly.</p>
+      </div>
+      <button class="btn btn-secondary" onclick="addPrizeRow()">+ Add prize</button>
+    </div>
+    <div class="table-wrap">
+      <table id="prizeTable" class="click-help" data-title="Grand-prize calculator" data-formula="Each row total = quantity × unit price; grand-prize total = sum of all rows" data-example="Changing 3 phones to 5 phones immediately recalculates the total prize cost.">
+        <thead><tr><th>Prize</th><th>Quantity</th><th>Unit price (SAR)</th><th>Total (SAR)</th><th></th></tr></thead>
+        <tbody id="prizeBody">
+          <tr><td><input value="iPhone 16"></td><td><input class="qty" type="number" min="0" value="3"></td><td><input class="unit" type="number" min="0" value="3199"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="5g Gold Bar 24K"></td><td><input class="qty" type="number" min="0" value="3"></td><td><input class="unit" type="number" min="0" value="2625"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="2.5g Gold Bar 24K"></td><td><input class="qty" type="number" min="0" value="5"></td><td><input class="unit" type="number" min="0" value="1484"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Cash Prize"></td><td><input class="qty" type="number" min="0" value="3"></td><td><input class="unit" type="number" min="0" value="2500"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Cash Prize"></td><td><input class="qty" type="number" min="0" value="5"></td><td><input class="unit" type="number" min="0" value="1000"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+        </tbody>
+        <tfoot><tr class="total-row"><td colspan="3">Grand-prize total</td><td class="money" id="grandPrizeTotal">SAR 0</td><td></td></tr></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2>6. Editable Jeeny office-event budget</h2>
+        <p>Switch the event off in Campaign Assumptions or change any item, quantity, or unit cost below.</p>
+      </div>
+      <button class="btn btn-secondary" onclick="addEventRow()">+ Add event item</button>
+    </div>
+    <div class="table-wrap">
+      <table id="eventTable" class="click-help" data-title="Office-event budget" data-formula="Each event row = quantity × unit cost; event total = sum of enabled event rows" data-example="Switch Include office event to No to exclude the entire event cost from the campaign budget.">
+        <thead><tr><th>Category</th><th>Item</th><th>Quantity</th><th>Unit cost (SAR)</th><th>Total (SAR)</th><th></th></tr></thead>
+        <tbody id="eventBody">
+          <tr><td><input value="Hospitality"></td><td><input value="Gahwaji"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="1500"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Hospitality"></td><td><input value="Dates / branded chocolates"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="2000"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Entertainment"></td><td><input value="Local artist"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="2000"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Catering"></td><td><input value="Lebanese / Turkish / Saudi cuisines"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="2700"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Decoration"></td><td><input value="Backdrop"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="0"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Production"></td><td><input value="Mic setup / day"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="800"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Decoration"></td><td><input value="Photobooth"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="2500"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Branding"></td><td><input value="Gift decoration"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="1000"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Decoration"></td><td><input value="Props"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="1500"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Coverage"></td><td><input value="Photographer"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="1500"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Transport"></td><td><input value="Car and fuel"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="500"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Logistics"></td><td><input value="Shipment and insurance"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="1200"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+          <tr><td><input value="Operations"></td><td><input value="Overtime"></td><td><input class="qty" type="number" value="1"></td><td><input class="unit" type="number" value="500"></td><td class="money row-total">0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td></tr>
+        </tbody>
+        <tfoot><tr class="total-row"><td colspan="4">Office-event total</td><td class="money" id="eventTotal">SAR 0</td><td></td></tr></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2>7. Final campaign budget and efficiency</h2>
+        <p>The dashboard checks the plan against the USD 30,000 ceiling and shows the remaining reserve.</p>
+      </div>
+    </div>
+    <div class="budget-layout">
+      <div class="budget-card">
+        <h3>Budget breakdown</h3>
+        <div class="budget-line tooltip click-help" data-tip="Campaign duration × daily winners per day × daily prize value."><span>Daily cash draws</span><strong id="bDaily">SAR 0</strong></div>
+        <div class="budget-line tooltip click-help" data-tip="Number of weekly draws × winners per draw × weekly prize value."><span>Weekly cash draws</span><strong id="bWeekly">SAR 0</strong></div>
+        <div class="budget-line tooltip click-help" data-tip="Sum of every editable grand-prize row: quantity × unit price."><span>Grand prizes</span><strong id="bGrand">SAR 0</strong></div>
+        <div class="budget-line tooltip click-help" data-tip="Sum of all office-event items when Include office event is set to Yes."><span>Office event</span><strong id="bEvent">SAR 0</strong></div>
+        <div class="budget-line tooltip click-help" data-tip="Daily draws + weekly draws + grand prizes + office-event cost."><span>Subtotal</span><strong id="bSubtotal">SAR 0</strong></div>
+        <div class="budget-line tooltip click-help" data-tip="Subtotal × contingency percentage."><span>Contingency</span><strong id="bContingency">SAR 0</strong></div>
+        <div class="budget-line tooltip click-help" data-tip="Subtotal + contingency. This is the final expected campaign cost."><span>Total campaign cost</span><strong id="bTotal">SAR 0</strong></div>
+        <div class="budget-line"><span>Total campaign cost (USD)</span><strong id="bUsd">USD 0</strong></div>
+        <div class="budget-line tooltip click-help" data-tip="Total campaign cost ÷ expected target achievers."><span>Cost per target achiever</span><strong id="costPerAchiever">SAR 0</strong></div>
+        <div class="budget-line tooltip click-help" data-tip="Total campaign cost ÷ expected number of full albums."><span>Cost per completed album</span><strong id="costPerAlbum">SAR 0</strong></div>
+        <div class="budget-line tooltip click-help" data-tip="Total campaign cost ÷ estimated incremental rides. Enter incremental rides in assumptions to activate this metric."><span>Cost per incremental ride</span><strong id="costPerRide">Not entered</strong></div>
+      </div>
+      <div>
+        <div class="status-box" id="statusBox">
+          <small>Budget status</small>
+          <div class="amount" id="statusAmount">SAR 0</div>
+          <div id="statusText">Within budget</div>
+        </div>
+        <div id="budgetMessage" class="good">The current campaign configuration is within the approved ceiling.</div>
+        <div class="note">Recommended practice: keep at least 10–15% of the approved ceiling uncommitted as a performance-accelerator reserve. It can be released after reviewing participation during the first week.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-note">Jeeny Back to School Book · Dynamic planning prototype · All values are editable estimates and should be validated with Procurement, Finance, Product, BI, Legal, and Fraud teams before launch.</div>
+</div>
+
+
+<div id="floatingTooltip" class="floating-tooltip"></div>
+
+<div id="explanationOverlay" class="explanation-overlay" role="dialog" aria-modal="true" aria-labelledby="explanationTitle">
+  <div class="explanation-panel">
+    <button class="close-explanation" onclick="closeExplanation()" aria-label="Close">×</button>
+    <h3 id="explanationTitle">Explanation</h3>
+    <p id="explanationText"></p>
+    <div id="explanationFormula" class="formula-box"></div>
+    <div id="explanationExample" class="example-box"></div>
+  </div>
+
+<script>
+const ids=[
+  'duration','eligible','achievementRate','avgDays','cardsPerPack','albumRate','usdBudget','fx',
+  'contingency','includeEvent','dailyWinners','dailyPrize','weeklyDraws','weeklyWinners',
+  'weeklyPrize','incrementalRides'
+];
+ids.forEach(id=>document.getElementById(id).addEventListener('input',calculate));
+document.addEventListener('input',e=>{
+  if(e.target.closest('#prizeTable')||e.target.closest('#eventTable')) calculate();
+});
+
+function num(id){return Number(document.getElementById(id).value)||0}
+function fmt(n){return Math.round(n).toLocaleString('en-US')}
+function money(n){return 'SAR '+fmt(n)}
+function usd(n){return 'USD '+Math.round(n).toLocaleString('en-US')}
+function dualMoney(n,fx){
+  const usdValue=fx? n/fx : 0;
+  return `<div class="dual-money"><span>${money(n)}</span><span class="usd">${usd(usdValue)}</span></div>`;
+}
+
+function tableTotal(tableId){
+  let total=0;
+  document.querySelectorAll(`#${tableId} tbody tr`).forEach(row=>{
+    const q=Number(row.querySelector('.qty')?.value)||0;
+    const u=Number(row.querySelector('.unit')?.value)||0;
+    const t=q*u;
+    row.querySelector('.row-total').innerHTML=dualMoney(t,num('fx'));
+    total+=t;
+  });
+  return total;
+}
+
+function calculate(){
+  const duration=num('duration');
+  const eligible=num('eligible');
+  const achievers=eligible*num('achievementRate')/100;
+  const packs=achievers*num('avgDays');
+  const fullAlbums=achievers*num('albumRate')/100;
+  const totalCardDrops=packs*num('cardsPerPack');
+  const averageDropsPerAchiever=num('avgDays')*num('cardsPerPack');
+  const dailyTotalWinners=duration*num('dailyWinners');
+  const dailyCost=dailyTotalWinners*num('dailyPrize');
+  const weeklyTotalWinners=num('weeklyDraws')*num('weeklyWinners');
+  const weeklyCost=weeklyTotalWinners*num('weeklyPrize');
+  const grandTotal=tableTotal('prizeTable');
+  const rawEventTotal=tableTotal('eventTable');
+  const eventTotal=num('includeEvent') ? rawEventTotal : 0;
+  const subtotal=dailyCost+weeklyCost+grandTotal+eventTotal;
+  const contingencyCost=subtotal*num('contingency')/100;
+  const total=subtotal+contingencyCost;
+  const budgetSar=num('usdBudget')*num('fx');
+  const remaining=budgetSar-total;
+  const avgDailyQualifiers=duration>0 ? achievers*num('avgDays')/duration : 0;
+  const dailyChance=avgDailyQualifiers>0 ? num('dailyWinners')/avgDailyQualifiers*100 : 0;
+  const weeklyPool=fullAlbums>0 ? fullAlbums : achievers;
+  const weeklyChance=weeklyPool>0 ? num('weeklyWinners')/weeklyPool*100 : 0;
+
+
+  document.querySelectorAll('#probabilityTable tbody tr').forEach(row=>{
+    const p=Number(row.dataset.prob)||0;
+    const expectedDrops=totalCardDrops*p;
+    const chanceAtLeastOnce=averageDropsPerAchiever>0 ? 1-Math.pow(1-p,averageDropsPerAchiever) : 0;
+    const expectedDrivers=achievers*chanceAtLeastOnce;
+    row.querySelector('.expected-drops').textContent=fmt(expectedDrops);
+    row.querySelector('.expected-drivers').textContent=fmt(expectedDrivers);
+    row.querySelector('.expected-drivers').setAttribute(
+      'title',
+      `${fmt(expectedDrivers)} drivers ≈ ${Math.round(chanceAtLeastOnce*100)}% of expected target achievers`
+    );
+  });
+
+  document.getElementById('sumEligible').textContent=fmt(eligible);
+  document.getElementById('sumAchievers').textContent=fmt(achievers);
+  document.getElementById('sumPacks').textContent=fmt(packs);
+  document.getElementById('sumAlbums').textContent=fmt(fullAlbums);
+  document.getElementById('sumCost').textContent=money(total);
+  document.getElementById('sumCostUsd').textContent=usd(num('fx')?total/num('fx'):0);
+  document.getElementById('sumRemaining').textContent=money(remaining);
+  document.getElementById('sumRemainingUsd').textContent=usd(num('fx')?remaining/num('fx'):0);
+
+  document.getElementById('dailyCalc').textContent=`${fmt(num('dailyWinners'))} winners × ${fmt(duration)} days × SAR ${fmt(num('dailyPrize'))}`;
+  document.getElementById('dailyCount').textContent=fmt(dailyTotalWinners);
+  document.getElementById('dailyCost').innerHTML=dualMoney(dailyCost,num('fx'));
+  document.getElementById('dailyChance').textContent=dailyChance.toFixed(2)+'% per daily qualifier';
+
+  document.getElementById('weeklyCalc').textContent=`${fmt(num('weeklyWinners'))} winners × ${fmt(num('weeklyDraws'))} draws × SAR ${fmt(num('weeklyPrize'))}`;
+  document.getElementById('weeklyCount').textContent=fmt(weeklyTotalWinners);
+  document.getElementById('weeklyCost').innerHTML=dualMoney(weeklyCost,num('fx'));
+  document.getElementById('weeklyChance').textContent=weeklyChance.toFixed(2)+'% per estimated pool';
+
+  document.getElementById('grandPrizeTotal').innerHTML=dualMoney(grandTotal,num('fx'));
+  document.getElementById('eventTotal').innerHTML=dualMoney(rawEventTotal,num('fx'));
+
+  document.getElementById('bDaily').innerHTML=dualMoney(dailyCost,num('fx'));
+  document.getElementById('bWeekly').innerHTML=dualMoney(weeklyCost,num('fx'));
+  document.getElementById('bGrand').innerHTML=dualMoney(grandTotal,num('fx'));
+  document.getElementById('bEvent').innerHTML=dualMoney(eventTotal,num('fx'));
+  document.getElementById('bSubtotal').innerHTML=dualMoney(subtotal,num('fx'));
+  document.getElementById('bContingency').innerHTML=dualMoney(contingencyCost,num('fx'));
+  document.getElementById('bTotal').innerHTML=dualMoney(total,num('fx'));
+  document.getElementById('bUsd').textContent=usd(num('fx')?total/num('fx'):0);
+  document.getElementById('costPerAchiever').innerHTML=achievers?dualMoney(total/achievers,num('fx')):dualMoney(0,num('fx'));
+  document.getElementById('costPerAlbum').innerHTML=fullAlbums?dualMoney(total/fullAlbums,num('fx')):dualMoney(0,num('fx'));
+  document.getElementById('costPerRide').innerHTML=num('incrementalRides')?dualMoney(total/num('incrementalRides'),num('fx')):'Not entered';
+
+  const box=document.getElementById('statusBox');
+  const message=document.getElementById('budgetMessage');
+  if(remaining>=0){
+    box.classList.remove('over');
+    document.getElementById('statusAmount').textContent=money(remaining);
+    document.getElementById('statusText').textContent='Remaining below the ceiling';
+    message.className='good';
+    message.textContent='The current campaign configuration is within the approved ceiling.';
+  }else{
+    box.classList.add('over');
+    document.getElementById('statusAmount').textContent=money(Math.abs(remaining));
+    document.getElementById('statusText').textContent='Over the approved ceiling';
+    message.className='warning';
+    message.textContent='Reduce winner counts, prize quantities, event costs, or contingency to return within budget.';
+  }
+}
+
+function addPrizeRow(){
+  const row=document.createElement('tr');
+  row.innerHTML='<td><input value="New Prize"></td><td><input class="qty" type="number" min="0" value="1"></td><td><input class="unit" type="number" min="0" value="0"></td><td class="money row-total">SAR 0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>';
+  document.getElementById('prizeBody').appendChild(row);calculate();
+}
+function addEventRow(){
+  const row=document.createElement('tr');
+  row.innerHTML='<td><input value="Other"></td><td><input value="New event item"></td><td><input class="qty" type="number" min="0" value="1"></td><td><input class="unit" type="number" min="0" value="0"></td><td class="money row-total">SAR 0</td><td><button class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>';
+  document.getElementById('eventBody').appendChild(row);calculate();
+}
+function removeRow(btn){btn.closest('tr').remove();calculate()}
+function resetDefaults(){location.reload()}
+
+
+const floatingTooltip = document.getElementById('floatingTooltip');
+const explanationOverlay = document.getElementById('explanationOverlay');
+const explanationTitle = document.getElementById('explanationTitle');
+const explanationText = document.getElementById('explanationText');
+const explanationFormula = document.getElementById('explanationFormula');
+const explanationExample = document.getElementById('explanationExample');
+
+function getHelpTarget(node){
+  return node && node.closest ? node.closest('.click-help,[data-tip]') : null;
+}
+
+function getExplanationData(target){
+  const title =
+    target.dataset.title ||
+    target.querySelector('span, th, td, label, strong, h2, h3')?.textContent?.trim() ||
+    'Explanation';
+
+  const text =
+    target.dataset.tip ||
+    target.dataset.example ||
+    'This item is part of the campaign calculation.';
+
+  const formula =
+    target.dataset.formula ||
+    'This value updates automatically when the related campaign assumptions change.';
+
+  const example =
+    target.dataset.example ||
+    'Edit the related input to see this number update throughout the planner.';
+
+  return {title, text, formula, example};
+}
+
+function showFloatingExplanation(target){
+  if(!target || !floatingTooltip) return;
+
+  const data = getExplanationData(target);
+  floatingTooltip.textContent = data.text;
+  floatingTooltip.classList.add('show');
+
+  const rect = target.getBoundingClientRect();
+  const tooltipRect = floatingTooltip.getBoundingClientRect();
+  const gap = 10;
+
+  let left = rect.left + rect.width / 2 - tooltipRect.width / 2;
+  left = Math.max(12, Math.min(left, window.innerWidth - tooltipRect.width - 12));
+
+  let top = rect.top - tooltipRect.height - gap;
+  if(top < 12){
+    top = rect.bottom + gap;
+  }
+  if(top + tooltipRect.height > window.innerHeight - 12){
+    top = Math.max(12, window.innerHeight - tooltipRect.height - 12);
+  }
+
+  floatingTooltip.style.left = `${left}px`;
+  floatingTooltip.style.top = `${top}px`;
+}
+
+function hideFloatingExplanation(){
+  if(floatingTooltip){
+    floatingTooltip.classList.remove('show');
+  }
+}
+
+function openExplanation(target){
+  if(!target || !explanationOverlay) return;
+
+  const data = getExplanationData(target);
+  explanationTitle.textContent = data.title;
+  explanationText.textContent = data.text;
+  explanationFormula.innerHTML = `<strong>How it works:</strong><br>${data.formula}`;
+  explanationExample.innerHTML = `<strong>Example:</strong><br>${data.example}`;
+
+  hideFloatingExplanation();
+  explanationOverlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeExplanation(){
+  if(explanationOverlay){
+    explanationOverlay.classList.remove('show');
+  }
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('pointerover', event => {
+  const target = getHelpTarget(event.target);
+  if(target && !target.closest('#explanationOverlay')){
+    showFloatingExplanation(target);
+  }
+});
+
+document.addEventListener('pointerout', event => {
+  const from = getHelpTarget(event.target);
+  const to = getHelpTarget(event.relatedTarget);
+  if(from && from !== to){
+    hideFloatingExplanation();
+  }
+});
+
+document.addEventListener('click', event => {
+  if(event.target.closest('.close-explanation')){
+    closeExplanation();
+    return;
+  }
+
+  if(event.target === explanationOverlay){
+    closeExplanation();
+    return;
+  }
+
+  const target = getHelpTarget(event.target);
+  if(!target || target.closest('#explanationOverlay')) return;
+
+  // Inputs and editing buttons remain usable. Their label or surrounding row opens help.
+  if(event.target.matches('input, select, textarea, button')){
+    return;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+  openExplanation(target);
+});
+
+document.querySelectorAll('.summary-card.click-help').forEach(card => {
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('role', 'button');
+  card.setAttribute('aria-label', `Open explanation for ${card.dataset.title || 'this metric'}`);
+
+  card.addEventListener('click', event => {
+    if(event.target.matches('input, select, textarea, button')) return;
+    event.preventDefault();
+    event.stopPropagation();
+    openExplanation(card);
+  });
+
+  card.addEventListener('keydown', event => {
+    if(event.key === 'Enter' || event.key === ' '){
+      event.preventDefault();
+      openExplanation(card);
+    }
+  });
+});
+
+document.addEventListener('keydown', event => {
+  if(event.key === 'Escape'){
+    closeExplanation();
+  }
+});
+
+window.addEventListener('scroll', hideFloatingExplanation, true);
+window.addEventListener('resize', hideFloatingExplanation);
+
+calculate();
+</script>
+</div>
+
+</body>
+</html>
