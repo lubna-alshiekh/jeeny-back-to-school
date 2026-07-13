@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Jeeny Back to School Campaign</title>
+
+  <style>
+    @import url(
+      "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    );
+
+    :root {
+      --pink: #EC008C;
+      --purple: #662D91;
+      --dark-purple: #45196F;
+      --light-pink: #FCDFEB;
+      --white: #FFFFFF;
+      --text: #3E3E3F;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Poppins", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(236, 0, 140, 0.12),
+          transparent 28%
+        ),
+        linear-gradient(
+          135deg,
+          #f8f5fa 0%,
+          #ffffff 52%,
+          #fdf0f7 100%
+        );
+    }
+
+    .page {
+      width: min(1100px, 90vw);
+      margin: auto;
+      padding: 70px 0;
+    }
+
+    .hero {
+      padding: 42px;
+      border-radius: 30px;
+      color: var(--white);
+      background:
+        linear-gradient(
+          135deg,
+          var(--purple),
+          var(--dark-purple)
+        );
+      box-shadow:
+        0 24px 70px rgba(69, 25, 111, 0.2);
+    }
+
+    .eyebrow {
+      color: #ffd5ed;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 14px;
+      font-size: 46px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      max-width: 780px;
+      margin: 0;
+      color: #f4eafb;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 28px;
+    }
+
+    .card {
+      display: flex;
+      min-height: 260px;
+      padding: 28px;
+      border-radius: 24px;
+      background: var(--white);
+      box-shadow:
+        0 18px 48px rgba(69, 25, 111, 0.14);
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .icon {
+      font-size: 48px;
+    }
+
+    h2 {
+      margin: 18px 0 10px;
+      color: var(--dark-purple);
+      font-size: 25px;
+    }
+
+    .card p {
+      margin: 0;
+      color: #716a75;
+      line-height: 1.6;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      color: var(--white);
+      background: var(--purple);
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background: var(--pink);
+    }
+
+    .footer {
+      margin-top: 30px;
+      color: #8c8590;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 750px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .hero {
+        padding: 30px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">KSA Drivers Campaign</div>
+
+      <h1>Jeeny Back to School Book</h1>
+
+      <p>
+        Explore the interactive driver experience and the dynamic
+        campaign analysis and budget planner.
+      </p>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <div>
+          <div class="icon">📱</div>
+
+          <h2>In-App Experience</h2>
+
+          <p>
+            View the driver journey, daily ride targets, sticker
+            collection, pack opening and album experience.
+          </p>
+        </div>
+
+        <a class="button" href="app-experience.html">
+          Open In-App Experience
+        </a>
+      </article>
+
+      <article class="card">
+        <div>
+          <div class="icon">📊</div>
+
+          <h2>Campaign Planner</h2>
+
+          <p>
+            Adjust participation assumptions, prize quantities,
+            item prices, event costs and campaign budget estimates.
+          </p>
+        </div>
+
+        <a class="button" href="campaign-planner.html">
+          Open Campaign Planner
+        </a>
+      </article>
+    </section>
+
+    <div class="footer">
+      Jeeny Back to School Campaign · Interactive Planning Hub
+    </div>
+  </main>
+</body>
+</html>
